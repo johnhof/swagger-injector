@@ -1,0 +1,35 @@
+{
+  "name": "swagger-injector",
+  "version": "0.0.1",
+  "description": "Utility to inject swagger the doc GUI into a node API",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnhof/swagger-injector"
+  },
+  "keywords": [
+    "swagger",
+    "docs",
+    "documentation",
+    "injector",
+    "express",
+    "koa"
+  ],
+  "author": "John Hofrichter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johnhof/swagger-injector/issues"
+  },
+  "homepage": "https://github.com/johnhof/swagger-injector",
+  "devDependencies": {
+    "express": "^4.12.4",
+    "koa": "^0.20.0"
+  },
+  "dependencies": {
+    "co": "^4.5.4",
+    "lodash": "^3.9.1"
+  }
+}
