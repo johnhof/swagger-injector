@@ -1894,7 +1894,7 @@ SuperagentHttpClient.prototype.execute = function (obj) {
 
 var SwaggerHttp = require('./http');
 
-/** 
+/**
  * Resolves a spec's remote references
  */
 var Resolver = module.exports = function () {};
@@ -4269,7 +4269,7 @@ Operation.prototype.setContentTypes = function (args, opts) {
 
 /**
  * Returns true if the request accepts header matches anything in this.produces.
- *  If this.produces contains * / *, ignore the accept header. 
+ *  If this.produces contains * / *, ignore the accept header.
  * @param {string=} accepts The client request accept header.
  * @return {boolean}
  */
@@ -30556,7 +30556,7 @@ Emitter.prototype.hasListeners = function(event){
  * TODO: combatible error handling?
  */
 
-module.exports = function(arr, fn, initial){  
+module.exports = function(arr, fn, initial){
   var idx = 0;
   var len = arr.length;
   var curr = arguments.length == 3
@@ -30566,7 +30566,7 @@ module.exports = function(arr, fn, initial){
   while (idx < len) {
     curr = fn.call(null, curr, arr[idx], ++idx, arr);
   }
-  
+
   return curr;
 };
 },{}]},{},[1])(1)
@@ -30609,7 +30609,7 @@ window.SwaggerUi = Backbone.Router.extend({
         'patch'
       ];
     }
-
+ß
     if (typeof options.oauth2RedirectUrl === 'string') {
       window.oAuthRedirectUrl = options.redirectUrl;
     }
@@ -30632,11 +30632,15 @@ window.SwaggerUi = Backbone.Router.extend({
 
     // Create view to handle the header inputs
     this.headerView = new SwaggerUi.Views.HeaderView({el: $('#header')});
+ß
+    that.updateSwaggerUi({
+      url: http://localhost:3000/config/swagger.json'' || swaggerDoc
+    });
 
     // Event handler for when the baseUrl/apiKey is entered by user
-    this.headerView.on('update-swagger-ui', function(data) {
-      return that.updateSwaggerUi(data);
-    });
+    // this.headerView.on('update-swagger-ui', function(data) {
+    //   return that.updateSwaggerUi(data);
+    // });
   },
 
   // Set an option after initializing
@@ -31175,7 +31179,7 @@ SwaggerUi.Views.OperationView = Backbone.View.extend({
           range.moveToElementText(text);
           range.select();
       } else if (window.getSelection) {
-          selection = window.getSelection();        
+          selection = window.getSelection();
           range = document.createRange();
           range.selectNodeContents(text);
           selection.removeAllRanges();
