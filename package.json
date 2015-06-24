@@ -1,6 +1,6 @@
 {
   "name": "swagger-injector",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Utility to inject swagger the doc GUI into a node API",
   "main": "lib/index.js",
   "scripts": {
@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "co": "^4.5.4",
+    "fs": "0.0.2",
     "lodash": "^3.9.1"
   }
 }
