@@ -30609,7 +30609,7 @@ window.SwaggerUi = Backbone.Router.extend({
         'patch'
       ];
     }
-ß
+
     if (typeof options.oauth2RedirectUrl === 'string') {
       window.oAuthRedirectUrl = options.redirectUrl;
     }
@@ -30632,15 +30632,11 @@ window.SwaggerUi = Backbone.Router.extend({
 
     // Create view to handle the header inputs
     this.headerView = new SwaggerUi.Views.HeaderView({el: $('#header')});
-ß
-    that.updateSwaggerUi({
-      url: http://localhost:3000/config/swagger.json'' || swaggerDoc
-    });
 
     // Event handler for when the baseUrl/apiKey is entered by user
-    // this.headerView.on('update-swagger-ui', function(data) {
-    //   return that.updateSwaggerUi(data);
-    // });
+    this.headerView.on('update-swagger-ui', function(data) {
+      return that.updateSwaggerUi(data);
+    });
   },
 
   // Set an option after initializing
