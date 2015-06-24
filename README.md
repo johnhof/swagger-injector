@@ -85,10 +85,13 @@ var koaMiddleware = swagger.koa({ /* Some config settings */ });
 
 - Location of the swagger documentation json file
 - Can be relative or absolute (`./` for relative)
+- Can be a javascript object following the swagger structure
 - Defaults to `./swagger.json`
 
 ```javascript
 config.swagger = './foo/documentation.json';
+// OR
+config.swagger = require('/some/swagger/compiler');
 ```
 
 ## config.route
