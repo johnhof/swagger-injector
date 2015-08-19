@@ -1,6 +1,6 @@
 {
   "name": "swagger-injector",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Utility to inject swagger the doc GUI into a node API",
   "main": "lib/index.js",
   "scripts": {
