@@ -4,6 +4,8 @@ Adaptation of [swagger ui](https://github.com/swagger-api/swagger-ui) to render 
 
 If you're unfamiliar with swagger, I highly recommend [checking it out](http://swagger.io/).
 
+<img src="http://i.imgur.com/lR2qpnE.png" width="600">
+
 # Key
 
 - [Usage](#usage)
