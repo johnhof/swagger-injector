@@ -14,6 +14,7 @@ If you're unfamiliar with swagger, I highly recommend [checking it out](http://s
   - [config.swagger](#configswagger)
   - [confi.route](#configroute)
   - [config.unauthorized](#configunauthorized)
+  - [config.staticDir](#configstaticdir)
   - [config.resctrict](#configrestrict)
     - [config.restrict.accept](#configrestrictaccept)
     - [config.restrict.key](#configrestrictkey)
@@ -120,6 +121,15 @@ config.unathorized = function () {
 config.unauthorized = function (req, res) {
     res.status(401).send('Come back when you have a key');
 };
+```
+
+## config.staticDir
+
+- Static files directory of swagger-ui
+- Defaults to './dist' directory in swagger-injector module
+
+```javascript
+config.staticDir = process.cwd() + '/swagger-ui'
 ```
 
 ## config.resctrict
