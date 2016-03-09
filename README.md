@@ -28,7 +28,7 @@ If you're unfamiliar with swagger, I highly recommend [checking it out](http://s
 ## Koa
 
 * Assume ./swagger.json is a valid json file
-* [Working example](/johnhof/swagger-injector/tree/master/examples/koa.js)
+* [Working example](https://github.com/johnhof/swagger-injector/tree/master/examples/koa.js)
   * Run `$ npm install && node --harmony /examples/koa`
   * Request `localhost:5000/swagger`
 
@@ -46,7 +46,7 @@ app.listen(5000);
 ## Express
 
 * Assume ./swagger.json is a valid json file
-* [Working example](/johnhof/swagger-injector/tree/master/examples/express.js)
+* [Working example](https://github.com/johnhof/swagger-injector/tree/master/examples/express.js)
   * Run `$ npm install && node /examples/express`
   * Request `localhost:5000/swagger`
 
