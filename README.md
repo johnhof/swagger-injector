@@ -17,6 +17,7 @@ If you're unfamiliar with swagger, I highly recommend [checking it out](http://s
   - [confi.route](#configroute)
   - [config.unauthorized](#configunauthorized)
   - [config.staticDir](#configstaticdir)
+  - [config.css](#configcss)
   - [config.resctrict](#configrestrict)
     - [config.restrict.accept](#configrestrictaccept)
     - [config.restrict.key](#configrestrictkey)
@@ -134,7 +135,18 @@ config.unauthorized = function (req, res) {
 config.staticDir = process.cwd() + '/swagger-ui'
 ```
 
-## config.resctrict
+## config.css
+
+- Css string to inject into the view
+- Defaults to empty
+- Accepts war css string, or path to css file
+
+```javascript
+config.css = './foo/path/swagger.css';
+```
+
+
+## config.restrict
 
 - Restrictions for swagger access
 - Defaults to allow any request access
