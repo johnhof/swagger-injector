@@ -104,7 +104,7 @@ config.swagger = require('/some/swagger/compiler');
 - Defaults to `/swagger`
 
 ```javascript
-config.swagger = '/foo/bar/swag';
+config.route = '/foo/bar/swag';
 ```
 
 ## config.unauthorized
