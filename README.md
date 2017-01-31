@@ -6,6 +6,10 @@ If you're unfamiliar with swagger, I highly recommend [checking it out](http://s
 
 <img src="http://i.imgur.com/lR2qpnE.png" width="600">
 
+# 3.x
+
+3.x is designed to support koa2
+
 # Key
 
 - [Usage](#usage)
