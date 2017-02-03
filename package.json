@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "co": "^4.5.4",
-    "lodash": "^3.9.1"
+    "lodash": "^3.9.1",
+    "node-cache": "^4.1.1"
   }
 }

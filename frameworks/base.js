@@ -1,7 +1,13 @@
 'use strict';
 
+const PATH = require('path');
+const FS = require('fs');
+
 const DEFAULTS = {
   path: './swagger.json', // Path to swagger file
+  swagger: false, // swagger json
+  prefix: '', // Prefix applied to all routes
+  assets: '/_swagger_', // Prefix for all assets, appended to prefix
   route: '/swagger', // Router to serve documentation
   css: false, // Path to the css OR css string
   unauthorized: false, // Unauth handler
@@ -15,12 +21,22 @@ const DEFAULTS = {
 class BaseFramework {
   constructor(config={}) {
     config = (typeof config === 'string') ? { path: config } : config;
+    if (!(config.path || config.swagger)) throw Error('No swagger provided to the constructor');
     this.config = this.applyDefaults(config);
+    this.assets = this.prefix + this.assets;
+    this.route = this.prefix + this.route;
     if (this.config.unauthorized) this.unauthorized = this.config.unauthorized;
     this.session = {
       name: 'swagger-injector',
       value: this.config.authentication && this.config.authentication.value
     }
+
+    if (this.config.swagger) return;
+    let swag = this.config.path;
+    let swagPath = PATH.resolve(swag);
+    if (swagPath) swag = FS.readFileSync(swagPath);
+    if (swag) this.config.swagger = JSON.parse(swag);
+    if (!this.config.swagger) throw Error('Failed to find swagger json from config');
   }
 
   getDefaults () {
@@ -60,10 +76,26 @@ class BaseFramework {
     return false;
   }
 
+  isSwaggerSourcePath (path) {
+    return (path === `${prefix}/swagger.json`);
+  }
+
+  isDocumentPath (path) {
+    return (path.indexOf(this.config.route) === 0);
+  }
+
+  isAssetPath (path) {
+    return (path.indexOf(this.config.assets) === 0);
+  }
+
+  isCustomCssPath (path) {
+    return (path.indexOf(this.config.assets) === 0);
+  }
+
   unauthorized() {
     throw Error('No unauthorized handler defined for the framework');
   }
-  
+
   hasSession() {
     throw Error('No unauthorized handler defined for the framework');
   }
