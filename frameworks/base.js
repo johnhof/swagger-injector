@@ -2,6 +2,7 @@
 
 const PATH = require('path');
 const FS = require('fs');
+const FileCache = require('../lib/file_cache');
 
 const DEFAULTS = {
   path: './swagger.json', // Path to swagger file
@@ -25,6 +26,7 @@ class BaseFramework {
     this.config = this.applyDefaults(config);
     this.assets = this.prefix + this.assets;
     this.route = this.prefix + this.route;
+    this.fileCache = new FileCache();
     if (this.config.unauthorized) this.unauthorized = this.config.unauthorized;
     this.session = {
       name: 'swagger-injector',
@@ -77,7 +79,7 @@ class BaseFramework {
   }
 
   isSwaggerSourcePath (path) {
-    return (path === `${prefix}/swagger.json`);
+    return (path === `${this.config.prefix}/swagger.json`);
   }
 
   isDocumentPath (path) {
