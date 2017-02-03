@@ -1,9 +1,9 @@
 'use strict';
 
 let Koa = require('koa');
-// let koa = require('koa-next');
 let swagger = require('../');
-let port = process.env.PORT || 5000;
+
+const PORT = process.env.PORT || 3000;
 
 let app = new Koa();
 
@@ -14,13 +14,13 @@ app.use((ctx, next) => {
 
 app.use(swagger.koa({
   // debug: true,
-  prefix: '/v1',
+  // prefix: '/v1',
   css: '.info_title {font-size: 50px !important; }',
   path: `${__dirname}/swagger.json`,
   authentication: {
     sources: ['query'],
     key: 'foo',
-    // value: 'bar'
+    value: 'bar'
   },
   unauthorized: (ctx, next) => {
     ctx.status = 401;
@@ -29,9 +29,9 @@ app.use(swagger.koa({
 }));
 
 app.use((ctx, next) => {
-  this.body = 'OK';
+  ctx.body = { status: 'OK' };
   return next();
 });
 
-app.listen(port);
-console.log('Listening on port ' + port);
+app.listen(PORT);
+console.log(`Listening on port ${PORT}`);

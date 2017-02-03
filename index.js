@@ -2,7 +2,7 @@
 
 module.exports.frameworks = {};
 module.exports.frameworks.base = require('./frameworks/base');
-// module.exports.frameworks.express = require('./frameworks/express');
+module.exports.frameworks.express = require('./frameworks/express');
 module.exports.frameworks.koa = require('./frameworks/koa');
 
 let build = (framework) => (config={}) => {
