@@ -29,9 +29,10 @@ class BaseFramework {
     this.route = `${this.config.prefix || ''}${this.config.route}`;
     this.fileCache = new FileCache(config.cacheTTL, config.debug);
     if (this.config.unauthorized) this.unauthorized = this.config.unauthorized;
+    let auth = this.config.authentication;
     this.session = {
       name: 'swagger-injector',
-      value: this.config.authentication && this.config.authentication.value
+      value: (auth && auth.key) ? auth.key + (auth.value || '') : null
     }
 
     if (this.config.swagger) return;

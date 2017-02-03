@@ -16,11 +16,11 @@ app.use(swagger.koa({
   // debug: true,
   prefix: '/v1',
   css: '.info_title {font-size: 50px !important; }',
-  path: __dirname + '/swagger.json',
+  path: `${__dirname}/swagger.json`,
   authentication: {
     sources: ['query'],
     key: 'foo',
-    value: 'bar'
+    // value: 'bar'
   },
   unauthorized: (ctx, next) => {
     ctx.status = 401;
