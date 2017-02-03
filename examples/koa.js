@@ -1,22 +1,33 @@
-var koa = require('koa');
-var swagger = require('swagger-injector');
-var app = koa();
-var port = process.env.NODE_ENV || 5000;
+'use strict';
+
+let Koa = require('koa');
+// let koa = require('koa-next');
+let swagger = require('../');
+let port = process.env.PORT || 5000;
+
+let app = new Koa();
+
+app.use((ctx, next) => {
+  console.log(`--> ${ctx.path}`)
+  return next().then(() => console.log(`<-- ${ctx.path} ${ctx.status}`));
+})
 
 app.use(swagger.koa({
-  restrict: {
-    key: {
-      name: 'swag',
-      value: 'swagbag'
-    }
+  // debug: true,
+  css: '.info_title {font-size: 50px !important; }',
+  path: __dirname + '/swagger.json',
+  authentication: {
+    sources: ['query'],
+    key: 'foo',
+    value: 'bar'
   },
-  unauthorized : function *() {
-    this.status = 403;
-    this.body = 'Forbidden';
+  unauthorized: (ctx, next) => {
+    ctx.status = 401;
+    ctx.body = { error: 'Not authorized' };
   }
 }));
 
-app.use(function *() {
+app.use((ctx, next) => {
   this.body = 'OK';
 });
 

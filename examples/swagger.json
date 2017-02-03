@@ -11,7 +11,7 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "securityDefinitions": {
-    "apiKey":{
+    "apiKey": {
       "type": "apiKey",
       "name": "api_key",
       "description": "Require API key for access",
@@ -28,12 +28,53 @@
       "get": {
         "description": "Return ok",
         "tags": ["API"],
-        "security": [{ "bearer": [] }],
-        "parameters": {
-        },
+        "security": [{
+          "bearer": []
+        }],
+        "parameters": {},
         "responses": {
           "200": {
             "description": "User created"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/foo": {
+      "get": {
+        "description": "Return ok",
+        "tags": ["FOO"],
+        "security": [{
+          "bearer": []
+        }],
+        "parameters": {},
+        "responses": {
+          "200": {
+            "description": "Foo retrieved"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Return ok",
+        "tags": ["FOO"],
+        "security": [{
+          "bearer": []
+        }],
+        "parameters": {},
+        "responses": {
+          "200": {
+            "description": "Foo created"
           },
           "default": {
             "description": "Unexpected error",

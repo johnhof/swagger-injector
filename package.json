@@ -26,8 +26,7 @@
   "homepage": "https://github.com/johnhof/swagger-injector",
   "devDependencies": {
     "express": "^4.13.0",
-    "koa": "^2.0.0-alpha.7",
-    "koa-next": "git+ssh://git@github.com:koajs/koa.git#v2.x"
+    "koa": "^2.0.0-alpha.7"
   },
   "dependencies": {
     "node-cache": "^4.1.1"

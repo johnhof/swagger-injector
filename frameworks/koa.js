@@ -1,62 +1,71 @@
 'use strict';
 
-let helpers = require('../helpers');
-let _       = require('lodash');
+const BaseFramework = require('./base');
 
-module.exports = function (config) {
-  let prefixRegex = new RegExp('{{prefix}}', 'g');
-  let indexBuffer = helpers.staticFile('index.html', config.staticDir);
-  let indexHtml = indexBuffer.toString().replace(prefixRegex, config.prefix);
-  indexBuffer = new Buffer(indexHtml);
-  let unauthHandler = config.unauthorized || function *() {
-    this.status = 403;
-    this.body   = 'Forbidden';
-  };
+class KoaFramework extends BaseFramework {
+  constructor (config={}) {
+    super(config);
+  }
 
-  return function *(next) {
-    // handle access management
-    if (config.restrict) {
-      let accessCookie = this.cookies.get(config.cookieName);
-      if (helpers.isAuthorized(config, this.request, accessCookie)) {
-        this.cookies.set(config.cookieName, config.restrict.key.value);
-      } else if (this.path === config.route || this.path === '/swagger.json') {
-        return yield unauthHandler.apply(this);
-      }
+  unauthorized (ctx) {
+    ctx.body = 'Not Authorized'
+    ctx.status = 401;
+    return Promise.resolve();
+  }
+
+  hasSession(ctx) {
+    return ctx.cookies.get(this.session.name) === this.session.value;
+  }
+
+  createSession (ctx) {
+    ctx.cookies.set(this.session.name, this.session.value);
+  }
+
+  serveFile (ctx, path, type, injection) {
+    // Check if there is a valid session or valid credentials
+    if (this.hasSession(ctx) || this.isAuthorized(ctx)) this.createSession(ctx);
+    else {
+      this.unauthorized(ctx);
+      return Promise.resolve();
     }
 
-    // resource
-    if (config.swagPrefix.test(this.path)) {
-      let truePath = this.path.replace(config.swagPrefix, '');
-      if (~this.path.indexOf('.css')) this.set('Content-Type', 'text/css');
-      if (truePath === '_custom_.css') {
-        this.body = config.css;
+    if (type) ctx.set('Content-Type', type);
+    let file = this.fileCache.get(this.buildDistPath(path), injection);
+    if (file) ctx.body = file;
+    return Promise.resolve();
+  }
+
+  middleware () {
+    return (ctx, next) => {
+
+      // Serve up documentation html
+      if (this.isDocumentPath(ctx.path)) {
+        return this.serveFile(ctx, '/index.html', 'text/html', {
+          prefix: this.config.prefix
+        });
+
+      // Serve up swagger source json
+      } else if (this.isSwaggerSourcePath(ctx.path)) {
+        ctx.set('Content-Type', 'application/json');
+        ctx.body = this.config.swagger;
+        return Promise.resolve();
+
+      // Serve up custom css
+      } else if (this.isCustomCssPath(ctx.path)) {
+        ctx.set('Content-Type', 'text/css');
+        ctx.body = this.config.css;
+        return Promise.resolve();
+
+      // Serve up assets
+      } else if (this.isAssetPath(ctx.path)) {
+        let type = (ctx.path.indexOf('.css') >= 0) ? 'text/css' : undefined
+        return this.serveFile(ctx, ctx.path, type);
+
       } else {
-        this.body = helpers.staticFile(truePath, config.staticDir);
+        return next();
       }
-
-      return;
     }
+  }
+}
 
-    // swagger json
-    if (this.path === (config.prefix + '/swagger.json')) {
-      this.set('Content-Type', 'application/json');
-      if (_.isString(config.swagger)) {
-        this.body = helpers.staticFile(config.swagger, config.staticDir);
-      } else {
-        this.body = config.swagger;
-      }
-
-      return;
-    }
-
-    // index file
-    if (this.path === (config.prefix + config.route)) {
-      this.set('Content-Type', 'text/html');
-      this.body = indexHtml;
-      return;
-    }
-
-    yield next;
-  };
-
-};
+module.exports = KoaFramework;

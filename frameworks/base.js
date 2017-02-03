@@ -12,6 +12,7 @@ const DEFAULTS = {
   route: '/swagger', // Router to serve documentation
   css: false, // Path to the css OR css string
   unauthorized: false, // Unauth handler
+  dist: PATH.resolve(`${__dirname}/../dist`), // Path to dist directory
   authentication: {
     sources: ['query', 'body'], // Accepted sources of auth
     key: false, // Key for the auth
@@ -26,7 +27,7 @@ class BaseFramework {
     this.config = this.applyDefaults(config);
     this.assets = this.prefix + this.assets;
     this.route = this.prefix + this.route;
-    this.fileCache = new FileCache();
+    this.fileCache = new FileCache(config.cacheTTL, config.debug);
     if (this.config.unauthorized) this.unauthorized = this.config.unauthorized;
     this.session = {
       name: 'swagger-injector',
@@ -83,7 +84,7 @@ class BaseFramework {
   }
 
   isDocumentPath (path) {
-    return (path.indexOf(this.config.route) === 0);
+    return (path === this.config.route);
   }
 
   isAssetPath (path) {
@@ -91,7 +92,12 @@ class BaseFramework {
   }
 
   isCustomCssPath (path) {
-    return (path.indexOf(this.config.assets) === 0);
+    return (path === `${this.config.assets}/_custom_.css`);
+  }
+
+  buildDistPath (path) {
+    path = path.replace('_swagger_', '');
+    return PATH.resolve(`${this.config.dist}/${path}`);
   }
 
   unauthorized() {
