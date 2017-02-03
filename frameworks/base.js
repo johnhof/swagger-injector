@@ -17,6 +17,10 @@ class BaseFramework {
     config = (typeof config === 'string') ? { path: config } : config;
     this.config = this.applyDefaults(config);
     if (this.config.unauthorized) this.unauthorized = this.config.unauthorized;
+    this.session = {
+      name: 'swagger-injector',
+      value: this.config.authentication && this.config.authentication.value
+    }
   }
 
   getDefaults () {
@@ -57,6 +61,14 @@ class BaseFramework {
   }
 
   unauthorized() {
+    throw Error('No unauthorized handler defined for the framework');
+  }
+  
+  hasSession() {
+    throw Error('No unauthorized handler defined for the framework');
+  }
+
+  createSession() {
     throw Error('No unauthorized handler defined for the framework');
   }
 
