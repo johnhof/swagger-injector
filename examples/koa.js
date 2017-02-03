@@ -17,15 +17,15 @@ app.use(swagger.koa({
   // prefix: '/v1',
   css: '.info_title {font-size: 50px !important; }',
   path: `${__dirname}/swagger.json`,
-  authentication: {
-    sources: ['query'],
-    key: 'foo',
-    value: 'bar'
-  },
-  unauthorized: (ctx, next) => {
-    ctx.status = 401;
-    ctx.body = { error: 'Not authorized' };
-  }
+  // authentication: {
+  //   sources: ['query'],
+  //   key: 'foo',
+  //   value: 'bar'
+  // },
+  // unauthorized: (ctx, next) => {
+  //   ctx.status = 401;
+  //   ctx.body = { error: 'Not authorized' };
+  // }
 }));
 
 app.use((ctx, next) => {
