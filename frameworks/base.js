@@ -25,8 +25,8 @@ class BaseFramework {
     config = (typeof config === 'string') ? { path: config } : config;
     if (!(config.path || config.swagger)) throw Error('No swagger provided to the constructor');
     this.config = this.applyDefaults(config);
-    this.assets = this.prefix + this.assets;
-    this.route = this.prefix + this.route;
+    this.assets = `${this.config.prefix || ''}${this.config.assets}`;
+    this.route = `${this.config.prefix || ''}${this.config.route}`;
     this.fileCache = new FileCache(config.cacheTTL, config.debug);
     if (this.config.unauthorized) this.unauthorized = this.config.unauthorized;
     this.session = {
@@ -84,19 +84,20 @@ class BaseFramework {
   }
 
   isDocumentPath (path) {
-    return (path === this.config.route);
+    return (path === this.route);
   }
 
   isAssetPath (path) {
-    return (path.indexOf(this.config.assets) === 0);
+    return (path.indexOf(this.assets) === 0);
   }
 
   isCustomCssPath (path) {
-    return (path === `${this.config.assets}/_custom_.css`);
+    return (path === `${this.assets}/_custom_.css`);
   }
 
   buildDistPath (path) {
-    path = path.replace('_swagger_', '');
+    path = path.replace(`_swagger_`, '');
+    path = path.replace(`${this.config.prefix || ''}`, '');
     return PATH.resolve(`${this.config.dist}/${path}`);
   }
 

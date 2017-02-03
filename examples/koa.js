@@ -14,6 +14,7 @@ app.use((ctx, next) => {
 
 app.use(swagger.koa({
   // debug: true,
+  prefix: '/v1',
   css: '.info_title {font-size: 50px !important; }',
   path: __dirname + '/swagger.json',
   authentication: {
@@ -29,6 +30,7 @@ app.use(swagger.koa({
 
 app.use((ctx, next) => {
   this.body = 'OK';
+  return next();
 });
 
 app.listen(port);
