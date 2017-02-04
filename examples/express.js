@@ -1,25 +1,32 @@
-var express      = require('express');
-var swagger      = require('swagger-injector');
-var cookieParser = require('cookie-parser');
-var app          = express();
-var port = process.env.NODE_ENV || 5000;
+'use strict';
+
+let express = require('express');
+let cookieParser = require('cookie-parser');
+let swagger = require('../');
+
+let app = express();
+
+const PORT = process.env.NODE_ENV || 3000;
 
 app.use(cookieParser());
 app.use(swagger.express({
-  restrict: {
-    key: {
-      name: 'swag',
-      value: 'swagbag'
-    }
-  },
-  unauthorized: function (req, res) {
-    res.status(403).send('Forbidden');
-  }
+  // debug: true,
+  // prefix: '/v1',
+  css: '.info_title {font-size: 50px !important; }',
+  path: `${__dirname}/swagger.json`,
+  // authentication: {
+  //   sources: ['query'],
+  //   key: 'foo',
+  //   value: 'bar'
+  // },
+  // unauthorized: (req, res) => {
+  //   res.status(401).send({ error: 'Not authorized' });
+  // }
 }));
 
-app.use(function (req, res, next) {
-  res.send('OK');
+app.use((req, res, next) => {
+  res.send({ status: 'OK' });
 });
 
-app.listen(port);
-console.log('Listening on port ' + port);
+app.listen(PORT);
+console.log(`Listening on port ${PORT}`);

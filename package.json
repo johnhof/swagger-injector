@@ -1,10 +1,10 @@
 {
   "name": "swagger-injector",
-  "version": "2.0.9",
+  "version": "3.0.0",
   "description": "Utility to inject swagger the doc GUI into a node API",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha tests/*"
   },
   "repository": {
     "type": "git",
@@ -25,12 +25,13 @@
   },
   "homepage": "https://github.com/johnhof/swagger-injector",
   "devDependencies": {
-    "cookie-parser": "^1.3.5",
-    "express": "^4.13.0",
-    "koa": "^0.20.0"
+    "chai": "^3.5.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.1",
+    "koa": "^2.0.0-alpha.7",
+    "mocha": "^3.2.0"
   },
   "dependencies": {
-    "co": "^4.5.4",
-    "lodash": "^3.9.1"
+    "node-cache": "^4.1.1"
   }
 }
