@@ -1,90 +1,137 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Example API",
-    "description": "An example swagger doc for a fake API",
-    "version": "0.0.1"
-  },
-  "host": "localhost:5000",
-  "schemes": ["http", "https"],
-  "basePath": "/v1",
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
-  "securityDefinitions": {
-    "apiKey": {
-      "type": "apiKey",
-      "name": "api_key",
-      "description": "Require API key for access",
-      "in": "header"
-    },
-    "bearer": {
-      "type": "apiKey",
-      "name": "authorization",
-      "in": "header"
-    }
-  },
-  "paths": {
-    "/": {
-      "get": {
-        "description": "Return ok",
-        "tags": ["API"],
-        "security": [{
-          "bearer": []
-        }],
-        "parameters": {},
-        "responses": {
-          "200": {
-            "description": "User created"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      }
-    },
-    "/foo": {
-      "get": {
-        "description": "Return ok",
-        "tags": ["FOO"],
-        "security": [{
-          "bearer": []
-        }],
-        "parameters": {},
-        "responses": {
-          "200": {
-            "description": "Foo retrieved"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Return ok",
-        "tags": ["FOO"],
-        "security": [{
-          "bearer": []
-        }],
-        "parameters": {},
-        "responses": {
-          "200": {
-            "description": "Foo created"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      }
-    }
-  },
-  "definitions": {}
+	"openapi": "3.0.0",
+	"servers": [
+		{
+			"url": "http://localhost:3000/v1"
+		},
+		{
+			"url": "https://localhost:3000/v1"
+		}
+	],
+	"info": {
+		"title": "Example API",
+		"description": "An example swagger doc for a fake API",
+		"version": "0.0.1"
+	},
+	"paths": {
+		"/": {
+			"get": {
+				"description": "Return ok",
+				"tags": [
+					"API"
+				],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": {},
+				"responses": {
+					"200": {
+						"description": "User created"
+					},
+					"default": {
+						"description": "Unexpected error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/error"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/foo": {
+			"get": {
+				"description": "Return ok",
+				"tags": [
+					"FOO"
+				],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": {},
+				"responses": {
+					"200": {
+						"description": "Foo retrieved"
+					},
+					"default": {
+						"description": "Unexpected error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/error"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"description": "Return ok",
+				"tags": [
+					"FOO"
+				],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": {},
+				"responses": {
+					"200": {
+						"description": "Foo created"
+					},
+					"default": {
+						"description": "Unexpected error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/error"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"error": {
+				"type": "object",
+				"required": [
+					"message",
+					"code"
+				],
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"code": {
+						"type": "integer",
+						"minimum": 100,
+						"maximum": 600
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"apiKey": {
+				"type": "apiKey",
+				"name": "api_key",
+				"description": "Require API key for access",
+				"in": "header"
+			},
+			"bearer": {
+				"type": "apiKey",
+				"name": "authorization",
+				"in": "header"
+			}
+		}
+	}
 }
