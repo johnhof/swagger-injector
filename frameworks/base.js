@@ -96,6 +96,10 @@ class BaseFramework {
     return (path === `${this.assets}/_custom_.css`);
   }
 
+  isDistPath(path) {
+    return path.startsWith(this.config.dist)
+  }
+
   buildDistPath (path) {
     path = path.replace(`_swagger_`, '');
     path = path.replace(`${this.config.prefix || ''}`, '');
