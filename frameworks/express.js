@@ -11,6 +11,14 @@ class ExpressFramework extends BaseFramework {
     res.status(401).send('Not authorized');
   }
 
+  unauthorized (req, res) {
+    res.status(401).send('Not authorized');
+  }
+
+  forbidden (req, res) {
+    res.status(403).send('Forbidden');
+  }
+
   hasSession(req, res) {
     return req.cookies[this.session.name] === this.session.value;
   }
@@ -28,7 +36,13 @@ class ExpressFramework extends BaseFramework {
     }
 
     if (type) res.set('Content-Type', type);
-    let file = this.fileCache.get(this.buildDistPath(path), injection);
+    
+    let filePath = this.buildDistPath(path);
+    if (!this.isDistPath(filePath)) {
+      this.forbidden(req, res);
+      return Promise.resolve();
+    }
+    let file = this.fileCache.get(filePath, injection);
     if (file) res.send(file);
   }
 

@@ -13,6 +13,13 @@ class KoaFramework extends BaseFramework {
     return Promise.resolve();
   }
 
+  forbidden (ctx) {
+    ctx.body = 'Forbidden'
+    ctx.status = 403;
+    return Promise.resolve();
+  }
+
+
   hasSession(ctx) {
     return ctx.cookies.get(this.session.name) === this.session.value;
   }
@@ -30,7 +37,12 @@ class KoaFramework extends BaseFramework {
     }
 
     if (type) ctx.set('Content-Type', type);
-    let file = this.fileCache.get(this.buildDistPath(path), injection);
+    let filePath = this.buildDistPath(path);
+    if (!this.isDistPath(filePath)) {
+      this.forbidden(ctx);
+      return Promise.resolve();
+    }
+    let file = this.fileCache.get(filePath, injection);
     if (file) ctx.body = file;
     return Promise.resolve();
   }
