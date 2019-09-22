@@ -11,10 +11,6 @@ class ExpressFramework extends BaseFramework {
     res.status(401).send('Not authorized');
   }
 
-  unauthorized (req, res) {
-    res.status(401).send('Not authorized');
-  }
-
   forbidden (req, res) {
     res.status(403).send('Forbidden');
   }
